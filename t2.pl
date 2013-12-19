@@ -53,29 +53,19 @@ irmao(X,Y) :- pessoa(X),
               mae(Mae, X),
               mae(Mae, Y). % X e Y têm a mesma mãe
 
-% primos por parte de pai:
-primo(X,Y) :- pessoa(X),
-              pessoa(Y),
-              pessoa(Pai1),
-              pessoa(Pai2),
-              pai(Pai1, X),
-              pai(Pai2, Y),
-              irmao(Pai1, Pai2).
-
-% primos por parte de mãe:
-primo(X,Y) :- pessoa(X),
-              pessoa(Y),
-              pessoa(Mae1),
-              pessoa(Mae2),
-              mae(Mae1, X),
-              mae(Mae2, Y),
-              irmao(Mae1, Mae2).
-
 % caso 1: Y é pai de X
 filho(X,Y) :- pessoa(X), pessoa(Y), pai(Y,X).
 
 % caso 2: Y é mãe de X
 filho(X,Y) :- pessoa(X), pessoa(Y), mae(Y,X), !.
+
+primo(X,Y) :- pessoa(X),
+              pessoa(Y),
+              pessoa(P1),
+              pessoa(P2),
+              filho(X, P1),
+              filho(Y, P2),
+              irmao(P1, P2).
 
 % X é filho do filho de Y
 neto(X,Y) :- pessoa(X),
